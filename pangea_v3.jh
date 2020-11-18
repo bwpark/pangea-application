@@ -1,0 +1,284 @@
+entity TOS /* Terms of service */
+{
+  policy String maxlength(1024) 
+  text TextBlob /*text, html*/
+}
+entity Avatar
+{
+  categoryName String maxlength(128)
+
+  name String required maxlength(128)
+  description String maxlength(1024)
+  text TextBlob/*text, html*/  
+
+  logo ImageBlob required/* 아이콘*/
+  banner ImageBlob required/* 배경*/    
+
+  coin Integer required /* 소유 자산 */
+  point Integer required /* 활동을 통해 획득한 포인트 */
+
+  like Integer required
+  dislike Integer required
+  grade Integer required /* 평점 */
+  credit Integer required /* 신용도 */
+
+  views Integer required
+  comments Integer required
+  status AvatarStatus required
+  created Instant required
+  modified Instant required
+}
+entity Issue
+{
+  categoryName String maxlength(128)
+
+  name String required maxlength(128)
+  description String maxlength(1024)
+  text TextBlob required/*text, html*/  
+
+  coin Integer required /* 소유 자산 */
+  point Integer required /* 활동을 통해 획득한 포인트 */
+
+  like Integer required
+  dislike Integer required
+
+  author String required maxlength(128) /* avatar name */
+
+  views Integer required
+  comments Integer required
+  status IssueStatus required
+  created Instant required
+  modified Instant required
+}
+entity IssueOption
+{
+  name String required maxlength(128)
+  description String maxlength(1024)
+
+  coin Integer required /* 소유 자산 */
+  point Integer required /* 활동을 통해 획득한 포인트 */
+
+  status IssueOptionStatus required
+  created Instant required
+  modified Instant required
+}
+entity IssueResource
+{
+  type ResourceType required
+  link String required
+  created Instant required
+}
+ 
+/* -------------------------------------------------- 
+* Avatar 
+* -------------------------------------------------- */
+/* 분류 */
+entity Category2avatar
+{
+  icon String maxlength(1024)
+  name String required maxlength(128)
+  description String maxlength(1024)
+
+  status Category2avatarStatus required
+  created Instant required
+  modified Instant required
+}
+/* 소통 - Avatar to Avatar */
+entity Interact /* 댓글, 메시지 */
+{
+  text TextBlob/*text, html*/  
+
+  coin Integer required /* 소유 자산 */
+  point Integer required /* 활동을 통해 획득한 포인트 */
+
+  like Integer required
+  dislike Integer required
+
+  author String required maxlength(128) /* avatar name */
+
+  status InteractStatus required
+  created Instant required
+  modified Instant required
+}
+entity Emotion /* 호감/비호감 표시 */
+{
+  status EmotionStatus required
+  created Instant required
+  modified Instant required
+}
+entity Repute /* 평판 */
+{
+  description String maxlength(1024)
+  grade Integer required /* 평점 */
+  credit Integer required /* 신용도 */
+
+  status ReputeStatus required
+  created Instant required
+  modified Instant required
+}
+entity Regular /* 단골 가게  */
+{
+name String required maxlength(128)
+status RegularStatus required
+created Instant required
+modified Instant required
+}
+entity Report /* 불량 사용자 신고  */
+{
+description String maxlength(1024)
+name String required maxlength(128)
+
+status ReportStatus required
+created Instant required
+modified Instant required
+}
+entity Chemistry
+{
+yourName String required maxlength(128)
+toYou Integer required
+toMe Integer required
+created Instant required
+}
+ 
+/* -------------------------------------------------- 
+* Issue 
+* volume 단위 처리는 하나의 Issue 로 거래 내역 으로 등록된다.
+* -------------------------------------------------- */
+/* 분류 */
+entity Category2Issue
+{
+icon String maxlength(1024)
+name String required maxlength(128)
+description String maxlength(1024)
+
+status Category2IssueStatus required
+created Instant required
+modified Instant required
+}
+entity Pack /* 거래 묶음 */
+{
+description String maxlength(1024)
+
+coin Integer required /* 소유 자산 */
+point Integer required /* 활동을 통해 획득한 포인트 */
+
+shipTo String maxlength(1024)
+
+status PackStatus required
+created Instant required
+modified Instant required
+}
+entity Deal /* 거래 */
+{
+name String required maxlength(128)
+description String maxlength(1024)
+
+quantity Integer required /* 수량 */
+unitPrice Integer required /* 단가 */
+
+coin Integer required /* 지불 금액 */
+point Integer required /* 지불 포인트 */
+
+status DealStatus required
+created Instant required
+modified Instant required
+}
+entity DealOption /* 거래 Option */
+{
+name String required maxlength(128)
+
+status DealOptionStatus required
+created Instant required
+modified Instant required
+}
+enum AvatarStatus {
+ACTIVATED, VALID , INVALID 
+}
+enum IssueStatus {
+ORIGINATE
+}
+enum IssueOptionStatus {
+ORIGINATE
+}
+enum Category2avatarStatus {
+ORIGINATE
+}
+enum Category2IssueStatus {
+ORIGINATE
+}
+enum InteractStatus {
+ORIGINATE, READED
+}
+enum EmotionStatus {
+RESPECT("1") , DISS("-1"), NONE("0")
+}
+enum ReputeStatus {
+ORIGINATE
+}
+enum RegularStatus {
+ORIGINATE
+}
+enum ReportStatus {
+ORIGINATE, TAKEOVER("접수") , COMPLETED("완료")
+}
+enum PackStatus {
+ORIGINATE
+}
+enum DealStatus {
+ORIGINATE
+}
+enum DealOptionStatus {
+ORIGINATE
+}
+enum ResourceType {
+LINK, IMAGE , VIDEO , FILE
+}
+
+relationship OneToMany 
+{
+  /* category - avatar - isssue - Interact */
+  Category2avatar{avatar} to Avatar{category}
+  Avatar{issue} to Issue{me} 
+  Issue{option} to IssueOption
+  Issue{interact} to Interact{issue}
+  Interact{child} to Interact{parent}
+
+  Issue{resource} to IssueResource
+  Issue{emotion} to Emotion{issue}
+
+  /* avatar have many action*/
+  Avatar{interact} to Interact{me} /* 내 댓글 */
+  Avatar{emotion} to Emotion{me} /* 내 좋아요, 싫어요 */
+  Avatar{repute} to Repute{me} /* 내 평가 */
+  Avatar{regular} to Regular{me} /* 내 단골 가게 또는 follow */
+  Avatar{report} to Report{me} /* 내 신고 */
+  Avatar{chemistry} to Chemistry{me} /* 나와 잘맞는 사람 - 캐미글 보기*/
+
+  /* transaction */
+  Avatar{buy} to Pack{me} /* 내 구매 내역 */
+  Pack{deal} to Deal{pack} /* 내 구매 상세 내역 */
+  Deal{deal} to DealOption{pack} /* 내 구매 상세 내역 - 선택사항 */
+
+  Avatar{sale} to Deal{to} /* 내 판매 내역 */
+}
+relationship ManyToOne 
+{
+
+Avatar{user} to User
+
+Interact{you} to Avatar
+Emotion{you} to Avatar
+Repute{you} to Avatar
+Regular{you} to Avatar
+Report{you} to Avatar
+Chemistry{you} to Avatar
+
+Deal{with} to Issue
+}
+
+dto all with mapstruct
+
+paginate Avatar, Interact with infinite-scroll
+paginate Issue with pagination
+
+
