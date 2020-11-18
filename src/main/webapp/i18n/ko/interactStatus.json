@@ -1,0 +1,9 @@
+{
+  "pangeaApplicationApp": {
+    "InteractStatus": {
+      "null": "",
+      "ORIGINATE": "ORIGINATE",
+      "READED": "READED"
+    }
+  }
+}

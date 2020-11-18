@@ -1,0 +1,28 @@
+{
+  "pangeaApplicationApp": {
+    "category2avatar": {
+      "home": {
+        "title": "Category 2 Avatars",
+        "createLabel": "Create a new Category 2 Avatar",
+        "createOrEditLabel": "Create or edit a Category 2 Avatar",
+        "notFound": "No Category 2 Avatars found"
+      },
+      "created": "A new Category 2 Avatar is created with identifier {{ param }}",
+      "updated": "A Category 2 Avatar is updated with identifier {{ param }}",
+      "deleted": "A Category 2 Avatar is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Category 2 Avatar {{ id }}?"
+      },
+      "detail": {
+        "title": "Category 2 Avatar"
+      },
+      "icon": "Icon",
+      "name": "Name",
+      "description": "Description",
+      "status": "Status",
+      "created": "Created",
+      "modified": "Modified",
+      "avatar": "Avatar"
+    }
+  }
+}

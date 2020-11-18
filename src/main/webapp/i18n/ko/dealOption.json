@@ -1,0 +1,26 @@
+{
+  "pangeaApplicationApp": {
+    "dealOption": {
+      "home": {
+        "title": "Deal Options",
+        "createLabel": "Create a new Deal Option",
+        "createOrEditLabel": "Create or edit a Deal Option",
+        "notFound": "No Deal Options found"
+      },
+      "created": "A new Deal Option is created with identifier {{ param }}",
+      "updated": "A Deal Option is updated with identifier {{ param }}",
+      "deleted": "A Deal Option is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Deal Option {{ id }}?"
+      },
+      "detail": {
+        "title": "Deal Option"
+      },
+      "name": "Name",
+      "status": "Status",
+      "created": "Created",
+      "modified": "Modified",
+      "pack": "Pack"
+    }
+  }
+}

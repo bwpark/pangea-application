@@ -1,0 +1,29 @@
+{
+  "pangeaApplicationApp": {
+    "issueOption": {
+      "home": {
+        "title": "Issue Options",
+        "createLabel": "Create a new Issue Option",
+        "createOrEditLabel": "Create or edit a Issue Option",
+        "notFound": "No Issue Options found"
+      },
+      "created": "A new Issue Option is created with identifier {{ param }}",
+      "updated": "A Issue Option is updated with identifier {{ param }}",
+      "deleted": "A Issue Option is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Issue Option {{ id }}?"
+      },
+      "detail": {
+        "title": "Issue Option"
+      },
+      "name": "Name",
+      "description": "Description",
+      "coin": "Coin",
+      "point": "Point",
+      "status": "Status",
+      "created": "Created",
+      "modified": "Modified",
+      "issue": "Issue"
+    }
+  }
+}
