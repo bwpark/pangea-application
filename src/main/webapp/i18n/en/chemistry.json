@@ -1,0 +1,27 @@
+{
+  "pangeaApplicationApp": {
+    "chemistry": {
+      "home": {
+        "title": "Chemistries",
+        "createLabel": "Create a new Chemistry",
+        "createOrEditLabel": "Create or edit a Chemistry",
+        "notFound": "No Chemistries found"
+      },
+      "created": "A new Chemistry is created with identifier {{ param }}",
+      "updated": "A Chemistry is updated with identifier {{ param }}",
+      "deleted": "A Chemistry is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Chemistry {{ id }}?"
+      },
+      "detail": {
+        "title": "Chemistry"
+      },
+      "yourName": "Your Name",
+      "toYou": "To You",
+      "toMe": "To Me",
+      "created": "Created",
+      "you": "You",
+      "me": "Me"
+    }
+  }
+}

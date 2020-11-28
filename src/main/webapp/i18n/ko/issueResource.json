@@ -1,0 +1,25 @@
+{
+  "pangeaApplicationApp": {
+    "issueResource": {
+      "home": {
+        "title": "Issue Resources",
+        "createLabel": "Create a new Issue Resource",
+        "createOrEditLabel": "Create or edit a Issue Resource",
+        "notFound": "No Issue Resources found"
+      },
+      "created": "A new Issue Resource is created with identifier {{ param }}",
+      "updated": "A Issue Resource is updated with identifier {{ param }}",
+      "deleted": "A Issue Resource is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Issue Resource {{ id }}?"
+      },
+      "detail": {
+        "title": "Issue Resource"
+      },
+      "type": "Type",
+      "link": "Link",
+      "created": "Created",
+      "issue": "Issue"
+    }
+  }
+}

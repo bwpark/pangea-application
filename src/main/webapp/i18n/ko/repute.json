@@ -1,0 +1,29 @@
+{
+  "pangeaApplicationApp": {
+    "repute": {
+      "home": {
+        "title": "Reputes",
+        "createLabel": "Create a new Repute",
+        "createOrEditLabel": "Create or edit a Repute",
+        "notFound": "No Reputes found"
+      },
+      "created": "A new Repute is created with identifier {{ param }}",
+      "updated": "A Repute is updated with identifier {{ param }}",
+      "deleted": "A Repute is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Repute {{ id }}?"
+      },
+      "detail": {
+        "title": "Repute"
+      },
+      "description": "Description",
+      "grade": "Grade",
+      "credit": "Credit",
+      "status": "Status",
+      "created": "Created",
+      "modified": "Modified",
+      "you": "You",
+      "me": "Me"
+    }
+  }
+}
