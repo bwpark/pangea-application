@@ -1,0 +1,177 @@
+{
+  "name": "Avatar",
+  "fields": [
+    {
+      "fieldName": "categoryName",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "128"
+    },
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "128"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "1024"
+    },
+    {
+      "fieldName": "text",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    },
+    {
+      "fieldName": "logo",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "banner",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "coin",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "point",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "like",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "dislike",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "grade",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "credit",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "views",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "comments",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "AvatarStatus",
+      "fieldValues": "ACTIVATED,VALID,INVALID",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "created",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "modified",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "issue",
+      "otherEntityRelationshipName": "me",
+      "relationshipName": "issue"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "interact",
+      "otherEntityRelationshipName": "me",
+      "relationshipName": "interact"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "emotion",
+      "otherEntityRelationshipName": "me",
+      "relationshipName": "emotion"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "repute",
+      "otherEntityRelationshipName": "me",
+      "relationshipName": "repute"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "regular",
+      "otherEntityRelationshipName": "me",
+      "relationshipName": "regular"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "report",
+      "otherEntityRelationshipName": "me",
+      "relationshipName": "report"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "chemistry",
+      "otherEntityRelationshipName": "me",
+      "relationshipName": "chemistry"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "pack",
+      "otherEntityRelationshipName": "me",
+      "relationshipName": "buy"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "deal",
+      "otherEntityRelationshipName": "to",
+      "relationshipName": "sale"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "avatar",
+      "relationshipName": "user",
+      "otherEntityField": "id"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "category",
+      "otherEntityRelationshipName": "avatar",
+      "relationshipName": "category",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20201128153542",
+  "entityTableName": "avatar",
+  "dto": "mapstruct",
+  "pagination": "infinite-scroll",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

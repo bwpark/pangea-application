@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+    <!--
+        Added the constraints for entity Repute.
+    -->
+    <changeSet id="20201128154142-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="you_id"
+                                 baseTableName="repute"
+                                 constraintName="fk_repute_you_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="avatar"/>
+
+        <addForeignKeyConstraint baseColumnNames="me_id"
+                                 baseTableName="repute"
+                                 constraintName="fk_repute_me_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="avatar"/>
+
+    </changeSet>
+</databaseChangeLog>

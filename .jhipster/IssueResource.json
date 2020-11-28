@@ -1,0 +1,41 @@
+{
+  "name": "IssueResource",
+  "fields": [
+    {
+      "fieldName": "type",
+      "fieldType": "ResourceType",
+      "fieldValues": "LINK,IMAGE,VIDEO,FILE",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "link",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "created",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "issue",
+      "otherEntityRelationshipName": "resource",
+      "relationshipName": "issue",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20201128153842",
+  "entityTableName": "issue_resource",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

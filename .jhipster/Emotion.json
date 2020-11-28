@@ -1,0 +1,55 @@
+{
+  "name": "Emotion",
+  "fields": [
+    {
+      "fieldName": "status",
+      "fieldType": "EmotionStatus",
+      "fieldValues": "RESPECT (1),DISS (-1),NONE (0)",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "created",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "modified",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "avatar",
+      "otherEntityRelationshipName": "emotion",
+      "relationshipName": "you",
+      "otherEntityField": "id"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "issue",
+      "otherEntityRelationshipName": "emotion",
+      "relationshipName": "issue",
+      "otherEntityField": "id"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "avatar",
+      "otherEntityRelationshipName": "emotion",
+      "relationshipName": "me",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20201128154042",
+  "entityTableName": "emotion",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

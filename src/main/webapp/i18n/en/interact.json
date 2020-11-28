@@ -1,0 +1,35 @@
+{
+  "pangeaApplicationApp": {
+    "interact": {
+      "home": {
+        "title": "Interacts",
+        "createLabel": "Create a new Interact",
+        "createOrEditLabel": "Create or edit a Interact",
+        "notFound": "No Interacts found"
+      },
+      "created": "A new Interact is created with identifier {{ param }}",
+      "updated": "A Interact is updated with identifier {{ param }}",
+      "deleted": "A Interact is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Interact {{ id }}?"
+      },
+      "detail": {
+        "title": "Interact"
+      },
+      "text": "Text",
+      "coin": "Coin",
+      "point": "Point",
+      "like": "Like",
+      "dislike": "Dislike",
+      "author": "Author",
+      "status": "Status",
+      "created": "Created",
+      "modified": "Modified",
+      "child": "Child",
+      "you": "You",
+      "issue": "Issue",
+      "parent": "Parent",
+      "me": "Me"
+    }
+  }
+}
