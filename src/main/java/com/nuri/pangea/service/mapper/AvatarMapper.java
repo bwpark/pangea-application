@@ -9,11 +9,11 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link Avatar} and its DTO {@link AvatarDTO}.
  */
-@Mapper(componentModel = "spring", uses = {UserMapper.class, CategoryMapper.class})
+@Mapper(componentModel = "spring", uses = {CategoryMapper.class, UserMapper.class})
 public interface AvatarMapper extends EntityMapper<AvatarDTO, Avatar> {
 
-    @Mapping(source = "user.id", target = "userId")
     @Mapping(source = "category.id", target = "categoryId")
+    @Mapping(source = "user.id", target = "userId")
     AvatarDTO toDto(Avatar avatar);
 
     @Mapping(target = "issues", ignore = true)
@@ -34,8 +34,8 @@ public interface AvatarMapper extends EntityMapper<AvatarDTO, Avatar> {
     @Mapping(target = "removeBuy", ignore = true)
     @Mapping(target = "sales", ignore = true)
     @Mapping(target = "removeSale", ignore = true)
-    @Mapping(source = "userId", target = "user")
     @Mapping(source = "categoryId", target = "category")
+    @Mapping(source = "userId", target = "user")
     Avatar toEntity(AvatarDTO avatarDTO);
 
     default Avatar fromId(Long id) {

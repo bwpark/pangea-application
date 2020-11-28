@@ -7,10 +7,10 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, setFileData, o
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { IUser } from 'app/shared/model/user.model';
-import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
 import { ICategory } from 'app/shared/model/category.model';
 import { getEntities as getCategories } from 'app/entities/category/category.reducer';
+import { IUser } from 'app/shared/model/user.model';
+import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
 import { getEntity, updateEntity, createEntity, setBlob, reset } from './avatar.reducer';
 import { IAvatar } from 'app/shared/model/avatar.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
@@ -19,11 +19,11 @@ import { mapIdList } from 'app/shared/util/entity-utils';
 export interface IAvatarUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export const AvatarUpdate = (props: IAvatarUpdateProps) => {
-  const [userId, setUserId] = useState('0');
   const [categoryId, setCategoryId] = useState('0');
+  const [userId, setUserId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { avatarEntity, users, categories, loading, updating } = props;
+  const { avatarEntity, categories, users, loading, updating } = props;
 
   const { text, logo, logoContentType, banner, bannerContentType } = avatarEntity;
 
@@ -36,8 +36,8 @@ export const AvatarUpdate = (props: IAvatarUpdateProps) => {
       props.getEntity(props.match.params.id);
     }
 
-    props.getUsers();
     props.getCategories();
+    props.getUsers();
   }, []);
 
   const onBlobChange = (isAnImage, name) => event => {
@@ -388,13 +388,13 @@ export const AvatarUpdate = (props: IAvatarUpdateProps) => {
                 />
               </AvGroup>
               <AvGroup>
-                <Label for="avatar-user">
-                  <Translate contentKey="pangeaApplicationApp.avatar.user">User</Translate>
+                <Label for="avatar-category">
+                  <Translate contentKey="pangeaApplicationApp.avatar.category">Category</Translate>
                 </Label>
-                <AvInput id="avatar-user" type="select" className="form-control" name="userId">
+                <AvInput id="avatar-category" type="select" className="form-control" name="categoryId">
                   <option value="" key="0" />
-                  {users
-                    ? users.map(otherEntity => (
+                  {categories
+                    ? categories.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
                           {otherEntity.id}
                         </option>
@@ -403,13 +403,13 @@ export const AvatarUpdate = (props: IAvatarUpdateProps) => {
                 </AvInput>
               </AvGroup>
               <AvGroup>
-                <Label for="avatar-category">
-                  <Translate contentKey="pangeaApplicationApp.avatar.category">Category</Translate>
+                <Label for="avatar-user">
+                  <Translate contentKey="pangeaApplicationApp.avatar.user">User</Translate>
                 </Label>
-                <AvInput id="avatar-category" type="select" className="form-control" name="categoryId">
+                <AvInput id="avatar-user" type="select" className="form-control" name="userId">
                   <option value="" key="0" />
-                  {categories
-                    ? categories.map(otherEntity => (
+                  {users
+                    ? users.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
                           {otherEntity.id}
                         </option>
@@ -439,8 +439,8 @@ export const AvatarUpdate = (props: IAvatarUpdateProps) => {
 };
 
 const mapStateToProps = (storeState: IRootState) => ({
-  users: storeState.userManagement.users,
   categories: storeState.category.entities,
+  users: storeState.userManagement.users,
   avatarEntity: storeState.avatar.entity,
   loading: storeState.avatar.loading,
   updating: storeState.avatar.updating,
@@ -448,8 +448,8 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
-  getUsers,
   getCategories,
+  getUsers,
   getEntity,
   updateEntity,
   setBlob,

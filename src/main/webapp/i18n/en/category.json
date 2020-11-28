@@ -24,9 +24,7 @@
       "status": "Status",
       "created": "Created",
       "modified": "Modified",
-      "children": "Children",
-      "avatar": "Avatar",
-      "issue": "Issue",
+      "child": "Child",
       "parent": "Parent"
     }
   }

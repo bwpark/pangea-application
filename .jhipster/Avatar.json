@@ -150,16 +150,16 @@
     },
     {
       "relationshipType": "many-to-one",
-      "otherEntityName": "user",
+      "otherEntityName": "category",
       "otherEntityRelationshipName": "avatar",
-      "relationshipName": "user",
+      "relationshipName": "category",
       "otherEntityField": "id"
     },
     {
       "relationshipType": "many-to-one",
-      "otherEntityName": "category",
+      "otherEntityName": "user",
       "otherEntityRelationshipName": "avatar",
-      "relationshipName": "category",
+      "relationshipName": "user",
       "otherEntityField": "id"
     }
   ],

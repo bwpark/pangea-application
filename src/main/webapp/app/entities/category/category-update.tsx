@@ -16,7 +16,7 @@ import { mapIdList } from 'app/shared/util/entity-utils';
 export interface ICategoryUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export const CategoryUpdate = (props: ICategoryUpdateProps) => {
-  const [childrenId, setChildrenId] = useState('0');
+  const [childId, setChildId] = useState('0');
   const [parentId, setParentId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
