@@ -42,8 +42,8 @@
       "chemistry": "Chemistry",
       "buy": "Buy",
       "sale": "Sale",
-      "user": "User",
-      "category": "Category"
+      "category": "Category",
+      "user": "User"
     }
   }
 }

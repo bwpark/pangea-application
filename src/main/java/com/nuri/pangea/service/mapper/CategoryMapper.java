@@ -16,11 +16,7 @@ public interface CategoryMapper extends EntityMapper<CategoryDTO, Category> {
     CategoryDTO toDto(Category category);
 
     @Mapping(target = "children", ignore = true)
-    @Mapping(target = "removeChildren", ignore = true)
-    @Mapping(target = "avatars", ignore = true)
-    @Mapping(target = "removeAvatar", ignore = true)
-    @Mapping(target = "issues", ignore = true)
-    @Mapping(target = "removeIssue", ignore = true)
+    @Mapping(target = "removeChild", ignore = true)
     @Mapping(source = "parentId", target = "parent")
     Category toEntity(CategoryDTO categoryDTO);
 

@@ -155,10 +155,10 @@ export const Avatar = (props: IAvatarProps) => {
                     <Translate contentKey="pangeaApplicationApp.avatar.modified">Modified</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
                   <th>
-                    <Translate contentKey="pangeaApplicationApp.avatar.user">User</Translate> <FontAwesomeIcon icon="sort" />
+                    <Translate contentKey="pangeaApplicationApp.avatar.category">Category</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
                   <th>
-                    <Translate contentKey="pangeaApplicationApp.avatar.category">Category</Translate> <FontAwesomeIcon icon="sort" />
+                    <Translate contentKey="pangeaApplicationApp.avatar.user">User</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
                   <th />
                 </tr>
@@ -218,8 +218,8 @@ export const Avatar = (props: IAvatarProps) => {
                     </td>
                     <td>{avatar.created ? <TextFormat type="date" value={avatar.created} format={APP_DATE_FORMAT} /> : null}</td>
                     <td>{avatar.modified ? <TextFormat type="date" value={avatar.modified} format={APP_DATE_FORMAT} /> : null}</td>
-                    <td>{avatar.userId ? avatar.userId : ''}</td>
                     <td>{avatar.categoryId ? <Link to={`category/${avatar.categoryId}`}>{avatar.categoryId}</Link> : ''}</td>
+                    <td>{avatar.userId ? avatar.userId : ''}</td>
                     <td className="text-right">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`${match.url}/${avatar.id}`} color="info" size="sm">
