@@ -1,6 +1,5 @@
 buildscript {
     repositories {
-        mavenLocal()
         mavenCentral()
         gradlePluginPortal()
         maven { url "https://repo.spring.io/plugins-release" }
@@ -72,10 +71,16 @@ idea {
 }
 
 eclipse {
+
+    classpath {
+        downloadJavadoc = true
+        downloadSources = true
+    }
+
     sourceSets {
         main {
             java {
-                srcDirs += ["build/generated/sources/annotationProcessor/java/main"]
+                // srcDirs += ["build/generated/sources/annotationProcessor/java/main"]
             }
         }
     }
@@ -192,7 +197,6 @@ configurations {
 }
 
 repositories {
-    mavenLocal()
     mavenCentral()
     jcenter()
     //jhipster-needle-gradle-repositories - JHipster will add additional repositories

@@ -48,6 +48,7 @@ public class CacheConfiguration {
             createCache(cm, com.nuri.pangea.domain.Authority.class.getName());
             createCache(cm, com.nuri.pangea.domain.User.class.getName() + ".authorities");
             createCache(cm, com.nuri.pangea.domain.TOS.class.getName());
+            /*
             createCache(cm, com.nuri.pangea.domain.Avatar.class.getName());
             createCache(cm, com.nuri.pangea.domain.Avatar.class.getName() + ".issues");
             createCache(cm, com.nuri.pangea.domain.Avatar.class.getName() + ".interacts");
@@ -63,6 +64,7 @@ public class CacheConfiguration {
             createCache(cm, com.nuri.pangea.domain.Issue.class.getName() + ".interacts");
             createCache(cm, com.nuri.pangea.domain.Issue.class.getName() + ".resources");
             createCache(cm, com.nuri.pangea.domain.Issue.class.getName() + ".emotions");
+            */
             createCache(cm, com.nuri.pangea.domain.IssueOption.class.getName());
             createCache(cm, com.nuri.pangea.domain.IssueResource.class.getName());
             createCache(cm, com.nuri.pangea.domain.Category2avatar.class.getName());

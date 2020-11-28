@@ -13,8 +13,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-11-28T13:23:13+0700",
-    comments = "version: 1.3.1.Final, compiler: Eclipse JDT (IDE) 1.3.1100.v20200828-0941, environment: Java 15 (Oracle Corporation)"
+    date = "2020-11-28T22:45:51+0700",
+    comments = "version: 1.3.1.Final, compiler: Eclipse JDT (IDE) 1.3.1200.v20200916-0645, environment: Java 15.0.1 (Oracle Corporation)"
 )
 @Component
 public class AvatarMapperImpl implements AvatarMapper {
@@ -25,28 +25,28 @@ public class AvatarMapperImpl implements AvatarMapper {
     private Category2avatarMapper category2avatarMapper;
 
     @Override
-    public List<AvatarDTO> toDto(List<Avatar> arg0) {
-        if ( arg0 == null ) {
+    public List<Avatar> toEntity(List<AvatarDTO> dtoList) {
+        if ( dtoList == null ) {
             return null;
         }
 
-        List<AvatarDTO> list = new ArrayList<AvatarDTO>( arg0.size() );
-        for ( Avatar avatar : arg0 ) {
-            list.add( toDto( avatar ) );
+        List<Avatar> list = new ArrayList<Avatar>( dtoList.size() );
+        for ( AvatarDTO avatarDTO : dtoList ) {
+            list.add( toEntity( avatarDTO ) );
         }
 
         return list;
     }
 
     @Override
-    public List<Avatar> toEntity(List<AvatarDTO> arg0) {
-        if ( arg0 == null ) {
+    public List<AvatarDTO> toDto(List<Avatar> entityList) {
+        if ( entityList == null ) {
             return null;
         }
 
-        List<Avatar> list = new ArrayList<Avatar>( arg0.size() );
-        for ( AvatarDTO avatarDTO : arg0 ) {
-            list.add( toEntity( avatarDTO ) );
+        List<AvatarDTO> list = new ArrayList<AvatarDTO>( entityList.size() );
+        for ( Avatar avatar : entityList ) {
+            list.add( toDto( avatar ) );
         }
 
         return list;
@@ -62,32 +62,32 @@ public class AvatarMapperImpl implements AvatarMapper {
 
         avatarDTO.setUserId( avatarUserId( avatar ) );
         avatarDTO.setCategoryId( avatarCategoryId( avatar ) );
-        byte[] banner = avatar.getBanner();
-        if ( banner != null ) {
-            avatarDTO.setBanner( Arrays.copyOf( banner, banner.length ) );
-        }
-        avatarDTO.setBannerContentType( avatar.getBannerContentType() );
-        avatarDTO.setCategoryName( avatar.getCategoryName() );
-        avatarDTO.setCoin( avatar.getCoin() );
-        avatarDTO.setComments( avatar.getComments() );
-        avatarDTO.setCreated( avatar.getCreated() );
-        avatarDTO.setCredit( avatar.getCredit() );
-        avatarDTO.setDescription( avatar.getDescription() );
-        avatarDTO.setDislike( avatar.getDislike() );
-        avatarDTO.setGrade( avatar.getGrade() );
         avatarDTO.setId( avatar.getId() );
-        avatarDTO.setLike( avatar.getLike() );
+        avatarDTO.setCategoryName( avatar.getCategoryName() );
+        avatarDTO.setName( avatar.getName() );
+        avatarDTO.setDescription( avatar.getDescription() );
+        avatarDTO.setText( avatar.getText() );
         byte[] logo = avatar.getLogo();
         if ( logo != null ) {
             avatarDTO.setLogo( Arrays.copyOf( logo, logo.length ) );
         }
         avatarDTO.setLogoContentType( avatar.getLogoContentType() );
-        avatarDTO.setModified( avatar.getModified() );
-        avatarDTO.setName( avatar.getName() );
+        byte[] banner = avatar.getBanner();
+        if ( banner != null ) {
+            avatarDTO.setBanner( Arrays.copyOf( banner, banner.length ) );
+        }
+        avatarDTO.setBannerContentType( avatar.getBannerContentType() );
+        avatarDTO.setCoin( avatar.getCoin() );
         avatarDTO.setPoint( avatar.getPoint() );
-        avatarDTO.setStatus( avatar.getStatus() );
-        avatarDTO.setText( avatar.getText() );
+        avatarDTO.setLike( avatar.getLike() );
+        avatarDTO.setDislike( avatar.getDislike() );
+        avatarDTO.setGrade( avatar.getGrade() );
+        avatarDTO.setCredit( avatar.getCredit() );
         avatarDTO.setViews( avatar.getViews() );
+        avatarDTO.setComments( avatar.getComments() );
+        avatarDTO.setStatus( avatar.getStatus() );
+        avatarDTO.setCreated( avatar.getCreated() );
+        avatarDTO.setModified( avatar.getModified() );
 
         return avatarDTO;
     }
@@ -101,33 +101,33 @@ public class AvatarMapperImpl implements AvatarMapper {
         Avatar avatar = new Avatar();
 
         avatar.setCategory( category2avatarMapper.fromId( avatarDTO.getCategoryId() ) );
-        avatar.user( userMapper.userFromId( avatarDTO.getUserId() ) );
-        byte[] banner = avatarDTO.getBanner();
-        if ( banner != null ) {
-            avatar.setBanner( Arrays.copyOf( banner, banner.length ) );
-        }
-        avatar.setBannerContentType( avatarDTO.getBannerContentType() );
+        avatar.setUser( userMapper.userFromId( avatarDTO.getUserId() ) );
+        avatar.setId( avatarDTO.getId() );
         avatar.setCategoryName( avatarDTO.getCategoryName() );
-        avatar.setCoin( avatarDTO.getCoin() );
-        avatar.setComments( avatarDTO.getComments() );
-        avatar.setCreated( avatarDTO.getCreated() );
-        avatar.setCredit( avatarDTO.getCredit() );
+        avatar.setName( avatarDTO.getName() );
         avatar.setDescription( avatarDTO.getDescription() );
-        avatar.setDislike( avatarDTO.getDislike() );
-        avatar.setGrade( avatarDTO.getGrade() );
-        avatar.setLike( avatarDTO.getLike() );
+        avatar.setText( avatarDTO.getText() );
         byte[] logo = avatarDTO.getLogo();
         if ( logo != null ) {
             avatar.setLogo( Arrays.copyOf( logo, logo.length ) );
         }
         avatar.setLogoContentType( avatarDTO.getLogoContentType() );
-        avatar.setModified( avatarDTO.getModified() );
-        avatar.setName( avatarDTO.getName() );
+        byte[] banner = avatarDTO.getBanner();
+        if ( banner != null ) {
+            avatar.setBanner( Arrays.copyOf( banner, banner.length ) );
+        }
+        avatar.setBannerContentType( avatarDTO.getBannerContentType() );
+        avatar.setCoin( avatarDTO.getCoin() );
         avatar.setPoint( avatarDTO.getPoint() );
-        avatar.setId( avatarDTO.getId() );
-        avatar.status( avatarDTO.getStatus() );
-        avatar.text( avatarDTO.getText() );
-        avatar.views( avatarDTO.getViews() );
+        avatar.setLike( avatarDTO.getLike() );
+        avatar.setDislike( avatarDTO.getDislike() );
+        avatar.setGrade( avatarDTO.getGrade() );
+        avatar.setCredit( avatarDTO.getCredit() );
+        avatar.setViews( avatarDTO.getViews() );
+        avatar.setComments( avatarDTO.getComments() );
+        avatar.setStatus( avatarDTO.getStatus() );
+        avatar.setCreated( avatarDTO.getCreated() );
+        avatar.setModified( avatarDTO.getModified() );
 
         return avatar;
     }

@@ -1,18 +1,15 @@
 package com.nuri.pangea.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
-import javax.validation.constraints.*;
-
+import com.nuri.pangea.domain.enumeration.InteractStatus;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
-
-import com.nuri.pangea.domain.enumeration.InteractStatus;
+import javax.persistence.*;
+import javax.validation.constraints.*;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A Interact.
@@ -21,7 +18,6 @@ import com.nuri.pangea.domain.enumeration.InteractStatus;
 @Table(name = "interact")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Interact implements Serializable {
-
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -66,8 +62,7 @@ public class Interact implements Serializable {
     @Column(name = "modified", nullable = false)
     private Instant modified;
 
-    @OneToMany(mappedBy = "parent")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @OneToMany(mappedBy = "parent", fetch = FetchType.EAGER)
     private Set<Interact> children = new HashSet<>();
 
     @ManyToOne
@@ -288,6 +283,7 @@ public class Interact implements Serializable {
     public void setMe(Avatar avatar) {
         this.me = avatar;
     }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -321,5 +317,16 @@ public class Interact implements Serializable {
             ", created='" + getCreated() + "'" +
             ", modified='" + getModified() + "'" +
             "}";
+    }
+
+    @PrePersist
+    public void prePersist() {
+        setCreated(Instant.now());
+        setModified(Instant.now());
+    }
+
+    @PostUpdate
+    public void PreUpdate() {
+        setModified(Instant.now());
     }
 }

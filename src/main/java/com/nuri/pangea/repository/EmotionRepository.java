@@ -1,7 +1,7 @@
 package com.nuri.pangea.repository;
 
 import com.nuri.pangea.domain.Emotion;
-
+import java.util.Optional;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
@@ -11,4 +11,5 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface EmotionRepository extends JpaRepository<Emotion, Long> {
+    Optional<Emotion> findOneByIssueIdAndMeId(Long id, Long id2);
 }

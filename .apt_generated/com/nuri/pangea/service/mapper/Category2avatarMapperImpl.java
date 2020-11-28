@@ -12,54 +12,54 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-11-28T13:23:13+0700",
-    comments = "version: 1.3.1.Final, compiler: Eclipse JDT (IDE) 1.3.1100.v20200828-0941, environment: Java 15 (Oracle Corporation)"
+    date = "2020-11-28T22:45:51+0700",
+    comments = "version: 1.3.1.Final, compiler: Eclipse JDT (IDE) 1.3.1200.v20200916-0645, environment: Java 15.0.1 (Oracle Corporation)"
 )
 @Component
 public class Category2avatarMapperImpl implements Category2avatarMapper {
 
     @Override
-    public Category2avatarLiteDTO toDto(Category2avatar arg0) {
-        if ( arg0 == null ) {
+    public Category2avatarLiteDTO toDto(Category2avatar entity) {
+        if ( entity == null ) {
             return null;
         }
 
         Category2avatarLiteDTO category2avatarLiteDTO = new Category2avatarLiteDTO();
 
-        category2avatarLiteDTO.setCreated( arg0.getCreated() );
-        category2avatarLiteDTO.setDescription( arg0.getDescription() );
-        category2avatarLiteDTO.setIcon( arg0.getIcon() );
-        category2avatarLiteDTO.setId( arg0.getId() );
-        category2avatarLiteDTO.setModified( arg0.getModified() );
-        category2avatarLiteDTO.setName( arg0.getName() );
-        category2avatarLiteDTO.setStatus( arg0.getStatus() );
+        category2avatarLiteDTO.setId( entity.getId() );
+        category2avatarLiteDTO.setIcon( entity.getIcon() );
+        category2avatarLiteDTO.setName( entity.getName() );
+        category2avatarLiteDTO.setDescription( entity.getDescription() );
+        category2avatarLiteDTO.setStatus( entity.getStatus() );
+        category2avatarLiteDTO.setCreated( entity.getCreated() );
+        category2avatarLiteDTO.setModified( entity.getModified() );
 
         return category2avatarLiteDTO;
     }
 
     @Override
-    public List<Category2avatarLiteDTO> toDto(List<Category2avatar> arg0) {
-        if ( arg0 == null ) {
+    public List<Category2avatar> toEntity(List<Category2avatarLiteDTO> dtoList) {
+        if ( dtoList == null ) {
             return null;
         }
 
-        List<Category2avatarLiteDTO> list = new ArrayList<Category2avatarLiteDTO>( arg0.size() );
-        for ( Category2avatar category2avatar : arg0 ) {
-            list.add( toDto( category2avatar ) );
+        List<Category2avatar> list = new ArrayList<Category2avatar>( dtoList.size() );
+        for ( Category2avatarLiteDTO category2avatarLiteDTO : dtoList ) {
+            list.add( toEntity( category2avatarLiteDTO ) );
         }
 
         return list;
     }
 
     @Override
-    public List<Category2avatar> toEntity(List<Category2avatarLiteDTO> arg0) {
-        if ( arg0 == null ) {
+    public List<Category2avatarLiteDTO> toDto(List<Category2avatar> entityList) {
+        if ( entityList == null ) {
             return null;
         }
 
-        List<Category2avatar> list = new ArrayList<Category2avatar>( arg0.size() );
-        for ( Category2avatarLiteDTO category2avatarLiteDTO : arg0 ) {
-            list.add( toEntity( category2avatarLiteDTO ) );
+        List<Category2avatarLiteDTO> list = new ArrayList<Category2avatarLiteDTO>( entityList.size() );
+        for ( Category2avatar category2avatar : entityList ) {
+            list.add( toDto( category2avatar ) );
         }
 
         return list;
@@ -73,13 +73,13 @@ public class Category2avatarMapperImpl implements Category2avatarMapper {
 
         Category2avatar category2avatar = new Category2avatar();
 
-        category2avatar.setCreated( category2avatarDTO.getCreated() );
-        category2avatar.setDescription( category2avatarDTO.getDescription() );
-        category2avatar.setIcon( category2avatarDTO.getIcon() );
-        category2avatar.setModified( category2avatarDTO.getModified() );
-        category2avatar.setName( category2avatarDTO.getName() );
         category2avatar.setId( category2avatarDTO.getId() );
-        category2avatar.status( category2avatarDTO.getStatus() );
+        category2avatar.setIcon( category2avatarDTO.getIcon() );
+        category2avatar.setName( category2avatarDTO.getName() );
+        category2avatar.setDescription( category2avatarDTO.getDescription() );
+        category2avatar.setStatus( category2avatarDTO.getStatus() );
+        category2avatar.setCreated( category2avatarDTO.getCreated() );
+        category2avatar.setModified( category2avatarDTO.getModified() );
 
         return category2avatar;
     }
@@ -92,14 +92,14 @@ public class Category2avatarMapperImpl implements Category2avatarMapper {
 
         Category2avatarDTO category2avatarDTO = new Category2avatarDTO();
 
-        category2avatarDTO.setChildren( category2avatarSetToCategory2avatarDTOSet( category2avatar.getChildren() ) );
-        category2avatarDTO.setCreated( category2avatar.getCreated() );
-        category2avatarDTO.setDescription( category2avatar.getDescription() );
-        category2avatarDTO.setIcon( category2avatar.getIcon() );
         category2avatarDTO.setId( category2avatar.getId() );
-        category2avatarDTO.setModified( category2avatar.getModified() );
+        category2avatarDTO.setIcon( category2avatar.getIcon() );
         category2avatarDTO.setName( category2avatar.getName() );
+        category2avatarDTO.setDescription( category2avatar.getDescription() );
         category2avatarDTO.setStatus( category2avatar.getStatus() );
+        category2avatarDTO.setCreated( category2avatar.getCreated() );
+        category2avatarDTO.setModified( category2avatar.getModified() );
+        category2avatarDTO.setChildren( category2avatarSetToCategory2avatarDTOSet( category2avatar.getChildren() ) );
 
         return category2avatarDTO;
     }

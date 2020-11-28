@@ -1,12 +1,16 @@
 package com.nuri.pangea.web.rest;
 
 import com.nuri.pangea.service.AvatarService;
-import com.nuri.pangea.web.rest.errors.BadRequestAlertException;
 import com.nuri.pangea.service.dto.AvatarDTO;
-
+import com.nuri.pangea.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Optional;
+import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,15 +18,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Optional;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 /**
  * REST controller for managing {@link com.nuri.pangea.domain.Avatar}.
@@ -30,7 +28,6 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api")
 public class AvatarResource {
-
     private final Logger log = LoggerFactory.getLogger(AvatarResource.class);
 
     private static final String ENTITY_NAME = "avatar";
@@ -58,7 +55,8 @@ public class AvatarResource {
             throw new BadRequestAlertException("A new avatar cannot already have an ID", ENTITY_NAME, "idexists");
         }
         AvatarDTO result = avatarService.save(avatarDTO);
-        return ResponseEntity.created(new URI("/api/avatars/" + result.getId()))
+        return ResponseEntity
+            .created(new URI("/api/avatars/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
@@ -79,7 +77,8 @@ public class AvatarResource {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
         AvatarDTO result = avatarService.save(avatarDTO);
-        return ResponseEntity.ok()
+        return ResponseEntity
+            .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, avatarDTO.getId().toString()))
             .body(result);
     }
@@ -121,6 +120,16 @@ public class AvatarResource {
     public ResponseEntity<Void> deleteAvatar(@PathVariable Long id) {
         log.debug("REST request to delete Avatar : {}", id);
         avatarService.delete(id);
-        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
+        return ResponseEntity
+            .noContent()
+            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
+            .build();
+    }
+
+    @GetMapping("/avatars/current")
+    public ResponseEntity<AvatarDTO> getAvatarFromCurrentUser() {
+        log.debug("REST request to get getAvatarFromCurrentUser ");
+        Optional<AvatarDTO> avatarDTO = avatarService.findOneByCurrentUser();
+        return ResponseUtil.wrapOrNotFound(avatarDTO);
     }
 }

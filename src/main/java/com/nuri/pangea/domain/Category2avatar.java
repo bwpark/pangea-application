@@ -1,17 +1,15 @@
 package com.nuri.pangea.domain;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
-import javax.validation.constraints.*;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.nuri.pangea.domain.enumeration.Category2avatarStatus;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
-
-import com.nuri.pangea.domain.enumeration.Category2avatarStatus;
+import javax.persistence.*;
+import javax.validation.constraints.*;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A Category2avatar.
@@ -20,7 +18,6 @@ import com.nuri.pangea.domain.enumeration.Category2avatarStatus;
 @Table(name = "category_2_avatar")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Category2avatar implements Serializable {
-
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -53,9 +50,17 @@ public class Category2avatar implements Serializable {
     @Column(name = "modified", nullable = false)
     private Instant modified;
 
+    @OneToMany(mappedBy = "parent")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    private Set<Category2avatar> children = new HashSet<>();
+
     @OneToMany(mappedBy = "category")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Avatar> avatars = new HashSet<>();
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = "children", allowSetters = true)
+    private Category2avatar parent;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -144,6 +149,31 @@ public class Category2avatar implements Serializable {
         this.modified = modified;
     }
 
+    public Set<Category2avatar> getChildren() {
+        return children;
+    }
+
+    public Category2avatar children(Set<Category2avatar> category2avatars) {
+        this.children = category2avatars;
+        return this;
+    }
+
+    public Category2avatar addChild(Category2avatar category2avatar) {
+        this.children.add(category2avatar);
+        category2avatar.setParent(this);
+        return this;
+    }
+
+    public Category2avatar removeChild(Category2avatar category2avatar) {
+        this.children.remove(category2avatar);
+        category2avatar.setParent(null);
+        return this;
+    }
+
+    public void setChildren(Set<Category2avatar> category2avatars) {
+        this.children = category2avatars;
+    }
+
     public Set<Avatar> getAvatars() {
         return avatars;
     }
@@ -168,6 +198,20 @@ public class Category2avatar implements Serializable {
     public void setAvatars(Set<Avatar> avatars) {
         this.avatars = avatars;
     }
+
+    public Category2avatar getParent() {
+        return parent;
+    }
+
+    public Category2avatar parent(Category2avatar category2avatar) {
+        this.parent = category2avatar;
+        return this;
+    }
+
+    public void setParent(Category2avatar category2avatar) {
+        this.parent = category2avatar;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override

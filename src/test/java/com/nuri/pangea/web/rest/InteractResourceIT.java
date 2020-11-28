@@ -1,12 +1,21 @@
 package com.nuri.pangea.web.rest;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 import com.nuri.pangea.PangeaApplicationApp;
 import com.nuri.pangea.domain.Interact;
+import com.nuri.pangea.domain.enumeration.InteractStatus;
 import com.nuri.pangea.repository.InteractRepository;
 import com.nuri.pangea.service.InteractService;
 import com.nuri.pangea.service.dto.InteractDTO;
 import com.nuri.pangea.service.mapper.InteractMapper;
-
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,17 +26,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Base64Utils;
-import javax.persistence.EntityManager;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-import com.nuri.pangea.domain.enumeration.InteractStatus;
 /**
  * Integration tests for the {@link InteractResource} REST controller.
  */
@@ -35,7 +34,6 @@ import com.nuri.pangea.domain.enumeration.InteractStatus;
 @AutoConfigureMockMvc
 @WithMockUser
 public class InteractResourceIT {
-
     private static final String DEFAULT_TEXT = "AAAAAAAAAA";
     private static final String UPDATED_TEXT = "BBBBBBBBBB";
 
@@ -95,10 +93,11 @@ public class InteractResourceIT {
             .dislike(DEFAULT_DISLIKE)
             .author(DEFAULT_AUTHOR)
             .status(DEFAULT_STATUS)
-            .created(DEFAULT_CREATED)
-            .modified(DEFAULT_MODIFIED);
+            .created(UPDATED_CREATED)
+            .modified(UPDATED_MODIFIED);
         return interact;
     }
+
     /**
      * Create an updated entity for this test.
      *
@@ -113,9 +112,10 @@ public class InteractResourceIT {
             .like(UPDATED_LIKE)
             .dislike(UPDATED_DISLIKE)
             .author(UPDATED_AUTHOR)
-            .status(UPDATED_STATUS)
-            .created(UPDATED_CREATED)
-            .modified(UPDATED_MODIFIED);
+            .status(UPDATED_STATUS);
+
+        interact.created(UPDATED_CREATED);
+        interact.modified(UPDATED_MODIFIED);
         return interact;
     }
 
@@ -130,9 +130,8 @@ public class InteractResourceIT {
         int databaseSizeBeforeCreate = interactRepository.findAll().size();
         // Create the Interact
         InteractDTO interactDTO = interactMapper.toDto(interact);
-        restInteractMockMvc.perform(post("/api/interacts")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(interactDTO)))
+        restInteractMockMvc
+            .perform(post("/api/interacts").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(interactDTO)))
             .andExpect(status().isCreated());
 
         // Validate the Interact in the database
@@ -160,16 +159,14 @@ public class InteractResourceIT {
         InteractDTO interactDTO = interactMapper.toDto(interact);
 
         // An entity with an existing ID cannot be created, so this API call must fail
-        restInteractMockMvc.perform(post("/api/interacts")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(interactDTO)))
+        restInteractMockMvc
+            .perform(post("/api/interacts").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(interactDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the Interact in the database
         List<Interact> interactList = interactRepository.findAll();
         assertThat(interactList).hasSize(databaseSizeBeforeCreate);
     }
-
 
     @Test
     @Transactional
@@ -181,10 +178,8 @@ public class InteractResourceIT {
         // Create the Interact, which fails.
         InteractDTO interactDTO = interactMapper.toDto(interact);
 
-
-        restInteractMockMvc.perform(post("/api/interacts")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(interactDTO)))
+        restInteractMockMvc
+            .perform(post("/api/interacts").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(interactDTO)))
             .andExpect(status().isBadRequest());
 
         List<Interact> interactList = interactRepository.findAll();
@@ -201,10 +196,8 @@ public class InteractResourceIT {
         // Create the Interact, which fails.
         InteractDTO interactDTO = interactMapper.toDto(interact);
 
-
-        restInteractMockMvc.perform(post("/api/interacts")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(interactDTO)))
+        restInteractMockMvc
+            .perform(post("/api/interacts").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(interactDTO)))
             .andExpect(status().isBadRequest());
 
         List<Interact> interactList = interactRepository.findAll();
@@ -221,10 +214,8 @@ public class InteractResourceIT {
         // Create the Interact, which fails.
         InteractDTO interactDTO = interactMapper.toDto(interact);
 
-
-        restInteractMockMvc.perform(post("/api/interacts")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(interactDTO)))
+        restInteractMockMvc
+            .perform(post("/api/interacts").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(interactDTO)))
             .andExpect(status().isBadRequest());
 
         List<Interact> interactList = interactRepository.findAll();
@@ -241,10 +232,8 @@ public class InteractResourceIT {
         // Create the Interact, which fails.
         InteractDTO interactDTO = interactMapper.toDto(interact);
 
-
-        restInteractMockMvc.perform(post("/api/interacts")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(interactDTO)))
+        restInteractMockMvc
+            .perform(post("/api/interacts").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(interactDTO)))
             .andExpect(status().isBadRequest());
 
         List<Interact> interactList = interactRepository.findAll();
@@ -261,10 +250,8 @@ public class InteractResourceIT {
         // Create the Interact, which fails.
         InteractDTO interactDTO = interactMapper.toDto(interact);
 
-
-        restInteractMockMvc.perform(post("/api/interacts")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(interactDTO)))
+        restInteractMockMvc
+            .perform(post("/api/interacts").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(interactDTO)))
             .andExpect(status().isBadRequest());
 
         List<Interact> interactList = interactRepository.findAll();
@@ -281,10 +268,8 @@ public class InteractResourceIT {
         // Create the Interact, which fails.
         InteractDTO interactDTO = interactMapper.toDto(interact);
 
-
-        restInteractMockMvc.perform(post("/api/interacts")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(interactDTO)))
+        restInteractMockMvc
+            .perform(post("/api/interacts").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(interactDTO)))
             .andExpect(status().isBadRequest());
 
         List<Interact> interactList = interactRepository.findAll();
@@ -301,10 +286,8 @@ public class InteractResourceIT {
         // Create the Interact, which fails.
         InteractDTO interactDTO = interactMapper.toDto(interact);
 
-
-        restInteractMockMvc.perform(post("/api/interacts")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(interactDTO)))
+        restInteractMockMvc
+            .perform(post("/api/interacts").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(interactDTO)))
             .andExpect(status().isBadRequest());
 
         List<Interact> interactList = interactRepository.findAll();
@@ -321,10 +304,8 @@ public class InteractResourceIT {
         // Create the Interact, which fails.
         InteractDTO interactDTO = interactMapper.toDto(interact);
 
-
-        restInteractMockMvc.perform(post("/api/interacts")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(interactDTO)))
+        restInteractMockMvc
+            .perform(post("/api/interacts").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(interactDTO)))
             .andExpect(status().isBadRequest());
 
         List<Interact> interactList = interactRepository.findAll();
@@ -338,7 +319,8 @@ public class InteractResourceIT {
         interactRepository.saveAndFlush(interact);
 
         // Get all the interactList
-        restInteractMockMvc.perform(get("/api/interacts?sort=id,desc"))
+        restInteractMockMvc
+            .perform(get("/api/interacts?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(interact.getId().intValue())))
@@ -352,7 +334,7 @@ public class InteractResourceIT {
             .andExpect(jsonPath("$.[*].created").value(hasItem(DEFAULT_CREATED.toString())))
             .andExpect(jsonPath("$.[*].modified").value(hasItem(DEFAULT_MODIFIED.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getInteract() throws Exception {
@@ -360,7 +342,8 @@ public class InteractResourceIT {
         interactRepository.saveAndFlush(interact);
 
         // Get the interact
-        restInteractMockMvc.perform(get("/api/interacts/{id}", interact.getId()))
+        restInteractMockMvc
+            .perform(get("/api/interacts/{id}", interact.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(interact.getId().intValue()))
@@ -374,12 +357,12 @@ public class InteractResourceIT {
             .andExpect(jsonPath("$.created").value(DEFAULT_CREATED.toString()))
             .andExpect(jsonPath("$.modified").value(DEFAULT_MODIFIED.toString()));
     }
+
     @Test
     @Transactional
     public void getNonExistingInteract() throws Exception {
         // Get the interact
-        restInteractMockMvc.perform(get("/api/interacts/{id}", Long.MAX_VALUE))
-            .andExpect(status().isNotFound());
+        restInteractMockMvc.perform(get("/api/interacts/{id}", Long.MAX_VALUE)).andExpect(status().isNotFound());
     }
 
     @Test
@@ -406,9 +389,8 @@ public class InteractResourceIT {
             .modified(UPDATED_MODIFIED);
         InteractDTO interactDTO = interactMapper.toDto(updatedInteract);
 
-        restInteractMockMvc.perform(put("/api/interacts")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(interactDTO)))
+        restInteractMockMvc
+            .perform(put("/api/interacts").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(interactDTO)))
             .andExpect(status().isOk());
 
         // Validate the Interact in the database
@@ -435,9 +417,8 @@ public class InteractResourceIT {
         InteractDTO interactDTO = interactMapper.toDto(interact);
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
-        restInteractMockMvc.perform(put("/api/interacts")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(interactDTO)))
+        restInteractMockMvc
+            .perform(put("/api/interacts").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(interactDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the Interact in the database
@@ -454,8 +435,8 @@ public class InteractResourceIT {
         int databaseSizeBeforeDelete = interactRepository.findAll().size();
 
         // Delete the interact
-        restInteractMockMvc.perform(delete("/api/interacts/{id}", interact.getId())
-            .accept(MediaType.APPLICATION_JSON))
+        restInteractMockMvc
+            .perform(delete("/api/interacts/{id}", interact.getId()).accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNoContent());
 
         // Validate the database contains one less item

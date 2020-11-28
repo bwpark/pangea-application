@@ -1,16 +1,18 @@
 package com.nuri.pangea.service.dto;
 
-import java.time.Instant;
-import javax.validation.constraints.*;
-import java.io.Serializable;
-import javax.persistence.Lob;
+import com.nuri.pangea.domain.Interact;
 import com.nuri.pangea.domain.enumeration.InteractStatus;
+import java.io.Serializable;
+import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.Lob;
+import javax.validation.constraints.*;
 
 /**
  * A DTO for the {@link com.nuri.pangea.domain.Interact} entity.
  */
 public class InteractDTO implements Serializable {
-    
     private Long id;
 
     @Lob
@@ -28,19 +30,17 @@ public class InteractDTO implements Serializable {
     @NotNull
     private Integer dislike;
 
-    @NotNull
+    private Set<Interact> children = new HashSet<>();
+
     @Size(max = 128)
     private String author;
 
     @NotNull
     private InteractStatus status;
 
-    @NotNull
     private Instant created;
 
-    @NotNull
     private Instant modified;
-
 
     private Long youId;
 
@@ -49,7 +49,7 @@ public class InteractDTO implements Serializable {
     private Long parentId;
 
     private Long meId;
-    
+
     public Long getId() {
         return id;
     }
@@ -198,5 +198,13 @@ public class InteractDTO implements Serializable {
             ", parentId=" + getParentId() +
             ", meId=" + getMeId() +
             "}";
+    }
+
+    public Set<Interact> getChildren() {
+        return children;
+    }
+
+    public void setChildren(Set<Interact> children) {
+        this.children = children;
     }
 }

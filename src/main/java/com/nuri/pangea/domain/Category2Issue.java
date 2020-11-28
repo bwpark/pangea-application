@@ -1,15 +1,15 @@
 package com.nuri.pangea.domain;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
-import javax.validation.constraints.*;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.nuri.pangea.domain.enumeration.Category2IssueStatus;
 import java.io.Serializable;
 import java.time.Instant;
-
-import com.nuri.pangea.domain.enumeration.Category2IssueStatus;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.*;
+import javax.validation.constraints.*;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A Category2Issue.
@@ -18,7 +18,6 @@ import com.nuri.pangea.domain.enumeration.Category2IssueStatus;
 @Table(name = "category_2_issue")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Category2Issue implements Serializable {
-
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -50,6 +49,14 @@ public class Category2Issue implements Serializable {
     @NotNull
     @Column(name = "modified", nullable = false)
     private Instant modified;
+
+    @OneToMany(mappedBy = "parent")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    private Set<Category2Issue> children = new HashSet<>();
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = "children", allowSetters = true)
+    private Category2Issue parent;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -137,6 +144,45 @@ public class Category2Issue implements Serializable {
     public void setModified(Instant modified) {
         this.modified = modified;
     }
+
+    public Set<Category2Issue> getChildren() {
+        return children;
+    }
+
+    public Category2Issue children(Set<Category2Issue> category2Issues) {
+        this.children = category2Issues;
+        return this;
+    }
+
+    public Category2Issue addChild(Category2Issue category2Issue) {
+        this.children.add(category2Issue);
+        category2Issue.setParent(this);
+        return this;
+    }
+
+    public Category2Issue removeChild(Category2Issue category2Issue) {
+        this.children.remove(category2Issue);
+        category2Issue.setParent(null);
+        return this;
+    }
+
+    public void setChildren(Set<Category2Issue> category2Issues) {
+        this.children = category2Issues;
+    }
+
+    public Category2Issue getParent() {
+        return parent;
+    }
+
+    public Category2Issue parent(Category2Issue category2Issue) {
+        this.parent = category2Issue;
+        return this;
+    }
+
+    public void setParent(Category2Issue category2Issue) {
+        this.parent = category2Issue;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override

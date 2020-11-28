@@ -1,15 +1,16 @@
 package com.nuri.pangea.service.dto;
 
-import java.time.Instant;
-import javax.validation.constraints.*;
-import java.io.Serializable;
 import com.nuri.pangea.domain.enumeration.Category2IssueStatus;
+import java.io.Serializable;
+import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
+import javax.validation.constraints.*;
 
 /**
  * A DTO for the {@link com.nuri.pangea.domain.Category2Issue} entity.
  */
 public class Category2IssueDTO implements Serializable {
-    
     private Long id;
 
     @Size(max = 1024)
@@ -25,13 +26,14 @@ public class Category2IssueDTO implements Serializable {
     @NotNull
     private Category2IssueStatus status;
 
+    private Set<Category2IssueDTO> children = new HashSet<>();
+
     @NotNull
     private Instant created;
 
     @NotNull
     private Instant modified;
 
-    
     public Long getId() {
         return id;
     }
@@ -117,5 +119,13 @@ public class Category2IssueDTO implements Serializable {
             ", created='" + getCreated() + "'" +
             ", modified='" + getModified() + "'" +
             "}";
+    }
+
+    public Set<Category2IssueDTO> getChildren() {
+        return children;
+    }
+
+    public void setChildren(Set<Category2IssueDTO> children) {
+        this.children = children;
     }
 }

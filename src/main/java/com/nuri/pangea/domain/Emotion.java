@@ -1,16 +1,13 @@
 package com.nuri.pangea.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
-import javax.validation.constraints.*;
-
+import com.nuri.pangea.domain.enumeration.EmotionStatus;
 import java.io.Serializable;
 import java.time.Instant;
-
-import com.nuri.pangea.domain.enumeration.EmotionStatus;
+import javax.persistence.*;
+import javax.validation.constraints.*;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A Emotion.
@@ -19,7 +16,6 @@ import com.nuri.pangea.domain.enumeration.EmotionStatus;
 @Table(name = "emotion")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Emotion implements Serializable {
-
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -137,6 +133,7 @@ public class Emotion implements Serializable {
     public void setMe(Avatar avatar) {
         this.me = avatar;
     }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -164,5 +161,16 @@ public class Emotion implements Serializable {
             ", created='" + getCreated() + "'" +
             ", modified='" + getModified() + "'" +
             "}";
+    }
+
+    @PrePersist
+    public void prePersist() {
+        setCreated(Instant.now());
+        setModified(Instant.now());
+    }
+
+    @PostUpdate
+    public void PreUpdate() {
+        setModified(Instant.now());
     }
 }

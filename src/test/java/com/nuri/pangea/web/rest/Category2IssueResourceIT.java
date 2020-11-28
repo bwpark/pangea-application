@@ -1,12 +1,21 @@
 package com.nuri.pangea.web.rest;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 import com.nuri.pangea.PangeaApplicationApp;
 import com.nuri.pangea.domain.Category2Issue;
+import com.nuri.pangea.domain.enumeration.Category2IssueStatus;
 import com.nuri.pangea.repository.Category2IssueRepository;
 import com.nuri.pangea.service.Category2IssueService;
-import com.nuri.pangea.service.dto.Category2IssueDTO;
+import com.nuri.pangea.service.dto.Category2IssueLiteDTO;
 import com.nuri.pangea.service.mapper.Category2IssueMapper;
-
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,17 +25,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
-import javax.persistence.EntityManager;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-import com.nuri.pangea.domain.enumeration.Category2IssueStatus;
 /**
  * Integration tests for the {@link Category2IssueResource} REST controller.
  */
@@ -34,7 +33,6 @@ import com.nuri.pangea.domain.enumeration.Category2IssueStatus;
 @AutoConfigureMockMvc
 @WithMockUser
 public class Category2IssueResourceIT {
-
     private static final String DEFAULT_ICON = "AAAAAAAAAA";
     private static final String UPDATED_ICON = "BBBBBBBBBB";
 
@@ -86,6 +84,7 @@ public class Category2IssueResourceIT {
             .modified(DEFAULT_MODIFIED);
         return category2Issue;
     }
+
     /**
      * Create an updated entity for this test.
      *
@@ -113,10 +112,13 @@ public class Category2IssueResourceIT {
     public void createCategory2Issue() throws Exception {
         int databaseSizeBeforeCreate = category2IssueRepository.findAll().size();
         // Create the Category2Issue
-        Category2IssueDTO category2IssueDTO = category2IssueMapper.toDto(category2Issue);
-        restCategory2IssueMockMvc.perform(post("/api/category-2-issues")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(category2IssueDTO)))
+        Category2IssueLiteDTO category2IssueDTO = category2IssueMapper.toDto(category2Issue);
+        restCategory2IssueMockMvc
+            .perform(
+                post("/api/category-2-issues")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(category2IssueDTO))
+            )
             .andExpect(status().isCreated());
 
         // Validate the Category2Issue in the database
@@ -138,19 +140,21 @@ public class Category2IssueResourceIT {
 
         // Create the Category2Issue with an existing ID
         category2Issue.setId(1L);
-        Category2IssueDTO category2IssueDTO = category2IssueMapper.toDto(category2Issue);
+        Category2IssueLiteDTO category2IssueDTO = category2IssueMapper.toDto(category2Issue);
 
         // An entity with an existing ID cannot be created, so this API call must fail
-        restCategory2IssueMockMvc.perform(post("/api/category-2-issues")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(category2IssueDTO)))
+        restCategory2IssueMockMvc
+            .perform(
+                post("/api/category-2-issues")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(category2IssueDTO))
+            )
             .andExpect(status().isBadRequest());
 
         // Validate the Category2Issue in the database
         List<Category2Issue> category2IssueList = category2IssueRepository.findAll();
         assertThat(category2IssueList).hasSize(databaseSizeBeforeCreate);
     }
-
 
     @Test
     @Transactional
@@ -160,12 +164,14 @@ public class Category2IssueResourceIT {
         category2Issue.setName(null);
 
         // Create the Category2Issue, which fails.
-        Category2IssueDTO category2IssueDTO = category2IssueMapper.toDto(category2Issue);
+        Category2IssueLiteDTO category2IssueDTO = category2IssueMapper.toDto(category2Issue);
 
-
-        restCategory2IssueMockMvc.perform(post("/api/category-2-issues")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(category2IssueDTO)))
+        restCategory2IssueMockMvc
+            .perform(
+                post("/api/category-2-issues")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(category2IssueDTO))
+            )
             .andExpect(status().isBadRequest());
 
         List<Category2Issue> category2IssueList = category2IssueRepository.findAll();
@@ -180,12 +186,14 @@ public class Category2IssueResourceIT {
         category2Issue.setStatus(null);
 
         // Create the Category2Issue, which fails.
-        Category2IssueDTO category2IssueDTO = category2IssueMapper.toDto(category2Issue);
+        Category2IssueLiteDTO category2IssueDTO = category2IssueMapper.toDto(category2Issue);
 
-
-        restCategory2IssueMockMvc.perform(post("/api/category-2-issues")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(category2IssueDTO)))
+        restCategory2IssueMockMvc
+            .perform(
+                post("/api/category-2-issues")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(category2IssueDTO))
+            )
             .andExpect(status().isBadRequest());
 
         List<Category2Issue> category2IssueList = category2IssueRepository.findAll();
@@ -200,12 +208,14 @@ public class Category2IssueResourceIT {
         category2Issue.setCreated(null);
 
         // Create the Category2Issue, which fails.
-        Category2IssueDTO category2IssueDTO = category2IssueMapper.toDto(category2Issue);
+        Category2IssueLiteDTO category2IssueDTO = category2IssueMapper.toDto(category2Issue);
 
-
-        restCategory2IssueMockMvc.perform(post("/api/category-2-issues")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(category2IssueDTO)))
+        restCategory2IssueMockMvc
+            .perform(
+                post("/api/category-2-issues")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(category2IssueDTO))
+            )
             .andExpect(status().isBadRequest());
 
         List<Category2Issue> category2IssueList = category2IssueRepository.findAll();
@@ -220,12 +230,14 @@ public class Category2IssueResourceIT {
         category2Issue.setModified(null);
 
         // Create the Category2Issue, which fails.
-        Category2IssueDTO category2IssueDTO = category2IssueMapper.toDto(category2Issue);
+        Category2IssueLiteDTO category2IssueDTO = category2IssueMapper.toDto(category2Issue);
 
-
-        restCategory2IssueMockMvc.perform(post("/api/category-2-issues")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(category2IssueDTO)))
+        restCategory2IssueMockMvc
+            .perform(
+                post("/api/category-2-issues")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(category2IssueDTO))
+            )
             .andExpect(status().isBadRequest());
 
         List<Category2Issue> category2IssueList = category2IssueRepository.findAll();
@@ -239,7 +251,8 @@ public class Category2IssueResourceIT {
         category2IssueRepository.saveAndFlush(category2Issue);
 
         // Get all the category2IssueList
-        restCategory2IssueMockMvc.perform(get("/api/category-2-issues?sort=id,desc"))
+        restCategory2IssueMockMvc
+            .perform(get("/api/category-2-issues?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(category2Issue.getId().intValue())))
@@ -250,7 +263,7 @@ public class Category2IssueResourceIT {
             .andExpect(jsonPath("$.[*].created").value(hasItem(DEFAULT_CREATED.toString())))
             .andExpect(jsonPath("$.[*].modified").value(hasItem(DEFAULT_MODIFIED.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getCategory2Issue() throws Exception {
@@ -258,7 +271,8 @@ public class Category2IssueResourceIT {
         category2IssueRepository.saveAndFlush(category2Issue);
 
         // Get the category2Issue
-        restCategory2IssueMockMvc.perform(get("/api/category-2-issues/{id}", category2Issue.getId()))
+        restCategory2IssueMockMvc
+            .perform(get("/api/category-2-issues/{id}", category2Issue.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(category2Issue.getId().intValue()))
@@ -269,12 +283,12 @@ public class Category2IssueResourceIT {
             .andExpect(jsonPath("$.created").value(DEFAULT_CREATED.toString()))
             .andExpect(jsonPath("$.modified").value(DEFAULT_MODIFIED.toString()));
     }
+
     @Test
     @Transactional
     public void getNonExistingCategory2Issue() throws Exception {
         // Get the category2Issue
-        restCategory2IssueMockMvc.perform(get("/api/category-2-issues/{id}", Long.MAX_VALUE))
-            .andExpect(status().isNotFound());
+        restCategory2IssueMockMvc.perform(get("/api/category-2-issues/{id}", Long.MAX_VALUE)).andExpect(status().isNotFound());
     }
 
     @Test
@@ -296,11 +310,14 @@ public class Category2IssueResourceIT {
             .status(UPDATED_STATUS)
             .created(UPDATED_CREATED)
             .modified(UPDATED_MODIFIED);
-        Category2IssueDTO category2IssueDTO = category2IssueMapper.toDto(updatedCategory2Issue);
+        Category2IssueLiteDTO category2IssueDTO = category2IssueMapper.toDto(updatedCategory2Issue);
 
-        restCategory2IssueMockMvc.perform(put("/api/category-2-issues")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(category2IssueDTO)))
+        restCategory2IssueMockMvc
+            .perform(
+                put("/api/category-2-issues")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(category2IssueDTO))
+            )
             .andExpect(status().isOk());
 
         // Validate the Category2Issue in the database
@@ -321,12 +338,15 @@ public class Category2IssueResourceIT {
         int databaseSizeBeforeUpdate = category2IssueRepository.findAll().size();
 
         // Create the Category2Issue
-        Category2IssueDTO category2IssueDTO = category2IssueMapper.toDto(category2Issue);
+        Category2IssueLiteDTO category2IssueDTO = category2IssueMapper.toDto(category2Issue);
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
-        restCategory2IssueMockMvc.perform(put("/api/category-2-issues")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(category2IssueDTO)))
+        restCategory2IssueMockMvc
+            .perform(
+                put("/api/category-2-issues")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(category2IssueDTO))
+            )
             .andExpect(status().isBadRequest());
 
         // Validate the Category2Issue in the database
@@ -343,8 +363,8 @@ public class Category2IssueResourceIT {
         int databaseSizeBeforeDelete = category2IssueRepository.findAll().size();
 
         // Delete the category2Issue
-        restCategory2IssueMockMvc.perform(delete("/api/category-2-issues/{id}", category2Issue.getId())
-            .accept(MediaType.APPLICATION_JSON))
+        restCategory2IssueMockMvc
+            .perform(delete("/api/category-2-issues/{id}", category2Issue.getId()).accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNoContent());
 
         // Validate the database contains one less item

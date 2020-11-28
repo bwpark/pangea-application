@@ -1,12 +1,21 @@
 package com.nuri.pangea.web.rest;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 import com.nuri.pangea.PangeaApplicationApp;
 import com.nuri.pangea.domain.Category2avatar;
+import com.nuri.pangea.domain.enumeration.Category2avatarStatus;
 import com.nuri.pangea.repository.Category2avatarRepository;
 import com.nuri.pangea.service.Category2avatarService;
-import com.nuri.pangea.service.dto.Category2avatarDTO;
+import com.nuri.pangea.service.dto.Category2avatarLiteDTO;
 import com.nuri.pangea.service.mapper.Category2avatarMapper;
-
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,17 +25,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
-import javax.persistence.EntityManager;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-import com.nuri.pangea.domain.enumeration.Category2avatarStatus;
 /**
  * Integration tests for the {@link Category2avatarResource} REST controller.
  */
@@ -34,7 +33,6 @@ import com.nuri.pangea.domain.enumeration.Category2avatarStatus;
 @AutoConfigureMockMvc
 @WithMockUser
 public class Category2avatarResourceIT {
-
     private static final String DEFAULT_ICON = "AAAAAAAAAA";
     private static final String UPDATED_ICON = "BBBBBBBBBB";
 
@@ -86,6 +84,7 @@ public class Category2avatarResourceIT {
             .modified(DEFAULT_MODIFIED);
         return category2avatar;
     }
+
     /**
      * Create an updated entity for this test.
      *
@@ -113,10 +112,13 @@ public class Category2avatarResourceIT {
     public void createCategory2avatar() throws Exception {
         int databaseSizeBeforeCreate = category2avatarRepository.findAll().size();
         // Create the Category2avatar
-        Category2avatarDTO category2avatarDTO = category2avatarMapper.toDto(category2avatar);
-        restCategory2avatarMockMvc.perform(post("/api/category-2-avatars")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(category2avatarDTO)))
+        Category2avatarLiteDTO category2avatarDTO = category2avatarMapper.toDto(category2avatar);
+        restCategory2avatarMockMvc
+            .perform(
+                post("/api/category-2-avatars")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(category2avatarDTO))
+            )
             .andExpect(status().isCreated());
 
         // Validate the Category2avatar in the database
@@ -138,19 +140,21 @@ public class Category2avatarResourceIT {
 
         // Create the Category2avatar with an existing ID
         category2avatar.setId(1L);
-        Category2avatarDTO category2avatarDTO = category2avatarMapper.toDto(category2avatar);
+        Category2avatarLiteDTO category2avatarDTO = category2avatarMapper.toDto(category2avatar);
 
         // An entity with an existing ID cannot be created, so this API call must fail
-        restCategory2avatarMockMvc.perform(post("/api/category-2-avatars")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(category2avatarDTO)))
+        restCategory2avatarMockMvc
+            .perform(
+                post("/api/category-2-avatars")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(category2avatarDTO))
+            )
             .andExpect(status().isBadRequest());
 
         // Validate the Category2avatar in the database
         List<Category2avatar> category2avatarList = category2avatarRepository.findAll();
         assertThat(category2avatarList).hasSize(databaseSizeBeforeCreate);
     }
-
 
     @Test
     @Transactional
@@ -160,12 +164,14 @@ public class Category2avatarResourceIT {
         category2avatar.setName(null);
 
         // Create the Category2avatar, which fails.
-        Category2avatarDTO category2avatarDTO = category2avatarMapper.toDto(category2avatar);
+        Category2avatarLiteDTO category2avatarDTO = category2avatarMapper.toDto(category2avatar);
 
-
-        restCategory2avatarMockMvc.perform(post("/api/category-2-avatars")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(category2avatarDTO)))
+        restCategory2avatarMockMvc
+            .perform(
+                post("/api/category-2-avatars")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(category2avatarDTO))
+            )
             .andExpect(status().isBadRequest());
 
         List<Category2avatar> category2avatarList = category2avatarRepository.findAll();
@@ -180,12 +186,14 @@ public class Category2avatarResourceIT {
         category2avatar.setStatus(null);
 
         // Create the Category2avatar, which fails.
-        Category2avatarDTO category2avatarDTO = category2avatarMapper.toDto(category2avatar);
+        Category2avatarLiteDTO category2avatarDTO = category2avatarMapper.toDto(category2avatar);
 
-
-        restCategory2avatarMockMvc.perform(post("/api/category-2-avatars")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(category2avatarDTO)))
+        restCategory2avatarMockMvc
+            .perform(
+                post("/api/category-2-avatars")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(category2avatarDTO))
+            )
             .andExpect(status().isBadRequest());
 
         List<Category2avatar> category2avatarList = category2avatarRepository.findAll();
@@ -200,12 +208,14 @@ public class Category2avatarResourceIT {
         category2avatar.setCreated(null);
 
         // Create the Category2avatar, which fails.
-        Category2avatarDTO category2avatarDTO = category2avatarMapper.toDto(category2avatar);
+        Category2avatarLiteDTO category2avatarDTO = category2avatarMapper.toDto(category2avatar);
 
-
-        restCategory2avatarMockMvc.perform(post("/api/category-2-avatars")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(category2avatarDTO)))
+        restCategory2avatarMockMvc
+            .perform(
+                post("/api/category-2-avatars")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(category2avatarDTO))
+            )
             .andExpect(status().isBadRequest());
 
         List<Category2avatar> category2avatarList = category2avatarRepository.findAll();
@@ -220,12 +230,14 @@ public class Category2avatarResourceIT {
         category2avatar.setModified(null);
 
         // Create the Category2avatar, which fails.
-        Category2avatarDTO category2avatarDTO = category2avatarMapper.toDto(category2avatar);
+        Category2avatarLiteDTO category2avatarDTO = category2avatarMapper.toDto(category2avatar);
 
-
-        restCategory2avatarMockMvc.perform(post("/api/category-2-avatars")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(category2avatarDTO)))
+        restCategory2avatarMockMvc
+            .perform(
+                post("/api/category-2-avatars")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(category2avatarDTO))
+            )
             .andExpect(status().isBadRequest());
 
         List<Category2avatar> category2avatarList = category2avatarRepository.findAll();
@@ -239,7 +251,8 @@ public class Category2avatarResourceIT {
         category2avatarRepository.saveAndFlush(category2avatar);
 
         // Get all the category2avatarList
-        restCategory2avatarMockMvc.perform(get("/api/category-2-avatars?sort=id,desc"))
+        restCategory2avatarMockMvc
+            .perform(get("/api/category-2-avatars?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(category2avatar.getId().intValue())))
@@ -250,7 +263,7 @@ public class Category2avatarResourceIT {
             .andExpect(jsonPath("$.[*].created").value(hasItem(DEFAULT_CREATED.toString())))
             .andExpect(jsonPath("$.[*].modified").value(hasItem(DEFAULT_MODIFIED.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getCategory2avatar() throws Exception {
@@ -258,7 +271,8 @@ public class Category2avatarResourceIT {
         category2avatarRepository.saveAndFlush(category2avatar);
 
         // Get the category2avatar
-        restCategory2avatarMockMvc.perform(get("/api/category-2-avatars/{id}", category2avatar.getId()))
+        restCategory2avatarMockMvc
+            .perform(get("/api/category-2-avatars/{id}", category2avatar.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(category2avatar.getId().intValue()))
@@ -269,12 +283,12 @@ public class Category2avatarResourceIT {
             .andExpect(jsonPath("$.created").value(DEFAULT_CREATED.toString()))
             .andExpect(jsonPath("$.modified").value(DEFAULT_MODIFIED.toString()));
     }
+
     @Test
     @Transactional
     public void getNonExistingCategory2avatar() throws Exception {
         // Get the category2avatar
-        restCategory2avatarMockMvc.perform(get("/api/category-2-avatars/{id}", Long.MAX_VALUE))
-            .andExpect(status().isNotFound());
+        restCategory2avatarMockMvc.perform(get("/api/category-2-avatars/{id}", Long.MAX_VALUE)).andExpect(status().isNotFound());
     }
 
     @Test
@@ -296,11 +310,14 @@ public class Category2avatarResourceIT {
             .status(UPDATED_STATUS)
             .created(UPDATED_CREATED)
             .modified(UPDATED_MODIFIED);
-        Category2avatarDTO category2avatarDTO = category2avatarMapper.toDto(updatedCategory2avatar);
+        Category2avatarLiteDTO category2avatarDTO = category2avatarMapper.toDto(updatedCategory2avatar);
 
-        restCategory2avatarMockMvc.perform(put("/api/category-2-avatars")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(category2avatarDTO)))
+        restCategory2avatarMockMvc
+            .perform(
+                put("/api/category-2-avatars")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(category2avatarDTO))
+            )
             .andExpect(status().isOk());
 
         // Validate the Category2avatar in the database
@@ -321,12 +338,15 @@ public class Category2avatarResourceIT {
         int databaseSizeBeforeUpdate = category2avatarRepository.findAll().size();
 
         // Create the Category2avatar
-        Category2avatarDTO category2avatarDTO = category2avatarMapper.toDto(category2avatar);
+        Category2avatarLiteDTO category2avatarDTO = category2avatarMapper.toDto(category2avatar);
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
-        restCategory2avatarMockMvc.perform(put("/api/category-2-avatars")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(category2avatarDTO)))
+        restCategory2avatarMockMvc
+            .perform(
+                put("/api/category-2-avatars")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(category2avatarDTO))
+            )
             .andExpect(status().isBadRequest());
 
         // Validate the Category2avatar in the database
@@ -343,8 +363,8 @@ public class Category2avatarResourceIT {
         int databaseSizeBeforeDelete = category2avatarRepository.findAll().size();
 
         // Delete the category2avatar
-        restCategory2avatarMockMvc.perform(delete("/api/category-2-avatars/{id}", category2avatar.getId())
-            .accept(MediaType.APPLICATION_JSON))
+        restCategory2avatarMockMvc
+            .perform(delete("/api/category-2-avatars/{id}", category2avatar.getId()).accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNoContent());
 
         // Validate the database contains one less item

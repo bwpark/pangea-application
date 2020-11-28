@@ -1,15 +1,17 @@
 package com.nuri.pangea.service.dto;
 
-import java.time.Instant;
-import javax.validation.constraints.*;
-import java.io.Serializable;
 import com.nuri.pangea.domain.enumeration.Category2avatarStatus;
+import java.io.Serializable;
+import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * A DTO for the {@link com.nuri.pangea.domain.Category2avatar} entity.
  */
 public class Category2avatarDTO implements Serializable {
-    
     private Long id;
 
     @Size(max = 1024)
@@ -22,16 +24,14 @@ public class Category2avatarDTO implements Serializable {
     @Size(max = 1024)
     private String description;
 
-    @NotNull
     private Category2avatarStatus status;
 
-    @NotNull
+    private Set<Category2avatarDTO> children = new HashSet<>();
+
     private Instant created;
 
-    @NotNull
     private Instant modified;
 
-    
     public Long getId() {
         return id;
     }
@@ -117,5 +117,13 @@ public class Category2avatarDTO implements Serializable {
             ", created='" + getCreated() + "'" +
             ", modified='" + getModified() + "'" +
             "}";
+    }
+
+    public Set<Category2avatarDTO> getChildren() {
+        return children;
+    }
+
+    public void setChildren(Set<Category2avatarDTO> children) {
+        this.children = children;
     }
 }

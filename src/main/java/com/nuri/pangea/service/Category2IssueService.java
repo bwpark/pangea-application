@@ -3,17 +3,16 @@ package com.nuri.pangea.service;
 import com.nuri.pangea.domain.Category2Issue;
 import com.nuri.pangea.repository.Category2IssueRepository;
 import com.nuri.pangea.service.dto.Category2IssueDTO;
+import com.nuri.pangea.service.dto.Category2IssueLiteDTO;
 import com.nuri.pangea.service.mapper.Category2IssueMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Service Implementation for managing {@link Category2Issue}.
@@ -21,7 +20,6 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class Category2IssueService {
-
     private final Logger log = LoggerFactory.getLogger(Category2IssueService.class);
 
     private final Category2IssueRepository category2IssueRepository;
@@ -39,7 +37,7 @@ public class Category2IssueService {
      * @param category2IssueDTO the entity to save.
      * @return the persisted entity.
      */
-    public Category2IssueDTO save(Category2IssueDTO category2IssueDTO) {
+    public Category2IssueLiteDTO save(Category2IssueLiteDTO category2IssueDTO) {
         log.debug("Request to save Category2Issue : {}", category2IssueDTO);
         Category2Issue category2Issue = category2IssueMapper.toEntity(category2IssueDTO);
         category2Issue = category2IssueRepository.save(category2Issue);
@@ -52,13 +50,14 @@ public class Category2IssueService {
      * @return the list of entities.
      */
     @Transactional(readOnly = true)
-    public List<Category2IssueDTO> findAll() {
+    public List<Category2IssueLiteDTO> findAll() {
         log.debug("Request to get all Category2Issues");
-        return category2IssueRepository.findAll().stream()
+        return category2IssueRepository
+            .findAll()
+            .stream()
             .map(category2IssueMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
     }
-
 
     /**
      * Get one category2Issue by id.
@@ -67,10 +66,9 @@ public class Category2IssueService {
      * @return the entity.
      */
     @Transactional(readOnly = true)
-    public Optional<Category2IssueDTO> findOne(Long id) {
+    public Optional<Category2IssueLiteDTO> findOne(Long id) {
         log.debug("Request to get Category2Issue : {}", id);
-        return category2IssueRepository.findById(id)
-            .map(category2IssueMapper::toDto);
+        return category2IssueRepository.findById(id).map(category2IssueMapper::toDto);
     }
 
     /**
@@ -81,5 +79,15 @@ public class Category2IssueService {
     public void delete(Long id) {
         log.debug("Request to delete Category2Issue : {}", id);
         category2IssueRepository.deleteById(id);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Category2IssueDTO> findAllwithChildren() {
+        log.debug("Request to get all Category2Issues");
+        return category2IssueRepository
+            .findAll()
+            .stream()
+            .map(category2IssueMapper::toCategory2IssueDTO)
+            .collect(Collectors.toCollection(LinkedList::new));
     }
 }
