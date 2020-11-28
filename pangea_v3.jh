@@ -228,9 +228,7 @@ LINK, IMAGE , VIDEO , FILE
 
 relationship OneToMany 
 {
-  Category{children} to Category{parent}
-  Category to Avatar{category}
-  Category to Issue{category}
+  Category{child} to Category{parent}
  
   /* category - avatar - isssue - Interact */
  
@@ -259,6 +257,9 @@ relationship OneToMany
 }
 relationship ManyToOne 
 {
+Avatar{category} to Category 
+Issue{category} to Category 
+
 
 Avatar{user} to User
 
