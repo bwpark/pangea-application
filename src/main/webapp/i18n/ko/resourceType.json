@@ -1,0 +1,11 @@
+{
+  "pangeaApplicationApp": {
+    "ResourceType": {
+      "null": "",
+      "LINK": "LINK",
+      "IMAGE": "IMAGE",
+      "VIDEO": "VIDEO",
+      "FILE": "FILE"
+    }
+  }
+}

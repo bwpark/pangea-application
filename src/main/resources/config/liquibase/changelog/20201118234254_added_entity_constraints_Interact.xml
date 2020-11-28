@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+    <!--
+        Added the constraints for entity Interact.
+    -->
+    <changeSet id="20201118234254-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="you_id"
+                                 baseTableName="interact"
+                                 constraintName="fk_interact_you_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="avatar"/>
+
+        <addForeignKeyConstraint baseColumnNames="issue_id"
+                                 baseTableName="interact"
+                                 constraintName="fk_interact_issue_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="issue"/>
+
+        <addForeignKeyConstraint baseColumnNames="parent_id"
+                                 baseTableName="interact"
+                                 constraintName="fk_interact_parent_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="interact"/>
+
+        <addForeignKeyConstraint baseColumnNames="me_id"
+                                 baseTableName="interact"
+                                 constraintName="fk_interact_me_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="avatar"/>
+
+    </changeSet>
+</databaseChangeLog>

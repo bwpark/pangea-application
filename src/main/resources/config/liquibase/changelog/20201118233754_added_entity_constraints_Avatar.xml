@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+    <!--
+        Added the constraints for entity Avatar.
+    -->
+    <changeSet id="20201118233754-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="avatar"
+                                 constraintName="fk_avatar_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="category_id"
+                                 baseTableName="avatar"
+                                 constraintName="fk_avatar_category_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="category_2_avatar"/>
+
+    </changeSet>
+</databaseChangeLog>

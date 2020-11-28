@@ -3,7 +3,10 @@ package com.nuri.pangea.web.rest;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.nuri.pangea.security.jwt.JWTFilter;
 import com.nuri.pangea.security.jwt.TokenProvider;
+import com.nuri.pangea.service.AvatarService;
+import com.nuri.pangea.service.dto.AvatarDTO;
 import com.nuri.pangea.web.rest.vm.LoginVM;
+import java.util.Optional;
 import javax.validation.Valid;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -24,13 +27,20 @@ public class UserJWTController {
 
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
-    public UserJWTController(TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder) {
+    private final AvatarService avatarService;
+
+    public UserJWTController(
+        TokenProvider tokenProvider,
+        AuthenticationManagerBuilder authenticationManagerBuilder,
+        AvatarService avatarService
+    ) {
         this.tokenProvider = tokenProvider;
         this.authenticationManagerBuilder = authenticationManagerBuilder;
+        this.avatarService = avatarService;
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<JWTToken> authorize(@Valid @RequestBody LoginVM loginVM) {
+    public ResponseEntity<Optional<AvatarDTO>> authorize(@Valid @RequestBody LoginVM loginVM) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
             loginVM.getUsername(),
             loginVM.getPassword()
@@ -38,11 +48,14 @@ public class UserJWTController {
 
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        Optional<AvatarDTO> avatar = avatarService.findOneByCurrentUser();
+
         boolean rememberMe = (loginVM.isRememberMe() == null) ? false : loginVM.isRememberMe();
         String jwt = tokenProvider.createToken(authentication, rememberMe);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JWTFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
-        return new ResponseEntity<>(new JWTToken(jwt), httpHeaders, HttpStatus.OK);
+        return new ResponseEntity<>(avatar, httpHeaders, HttpStatus.OK);
     }
 
     /**

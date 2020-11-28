@@ -1,0 +1,53 @@
+{
+  "name": "Chemistry",
+  "fields": [
+    {
+      "fieldName": "yourName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "128"
+    },
+    {
+      "fieldName": "toYou",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "toMe",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "created",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "avatar",
+      "otherEntityRelationshipName": "chemistry",
+      "relationshipName": "you",
+      "otherEntityField": "id"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "avatar",
+      "otherEntityRelationshipName": "chemistry",
+      "relationshipName": "me",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20201118234754",
+  "entityTableName": "chemistry",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}
