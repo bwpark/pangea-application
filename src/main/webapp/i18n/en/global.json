@@ -7,6 +7,22 @@
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Entities",
+        "tos": "TOS",
+        "avatar": "Avatar",
+        "issue": "Issue",
+        "issueOption": "Issue Option",
+        "issueResource": "Issue Resource",
+        "category2Avatar": "Category 2 Avatar",
+        "interact": "Interact",
+        "emotion": "Emotion",
+        "repute": "Repute",
+        "regular": "Regular",
+        "report": "Report",
+        "chemistry": "Chemistry",
+        "category2Issue": "Category 2 Issue",
+        "pack": "Pack",
+        "deal": "Deal",
+        "dealOption": "Deal Option",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

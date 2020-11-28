@@ -1,0 +1,49 @@
+{
+  "pangeaApplicationApp": {
+    "avatar": {
+      "home": {
+        "title": "Avatars",
+        "createLabel": "Create a new Avatar",
+        "createOrEditLabel": "Create or edit a Avatar",
+        "notFound": "No Avatars found"
+      },
+      "created": "A new Avatar is created with identifier {{ param }}",
+      "updated": "A Avatar is updated with identifier {{ param }}",
+      "deleted": "A Avatar is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Avatar {{ id }}?"
+      },
+      "detail": {
+        "title": "Avatar"
+      },
+      "categoryName": "Category Name",
+      "name": "Name",
+      "description": "Description",
+      "text": "Text",
+      "logo": "Logo",
+      "banner": "Banner",
+      "coin": "Coin",
+      "point": "Point",
+      "like": "Like",
+      "dislike": "Dislike",
+      "grade": "Grade",
+      "credit": "Credit",
+      "views": "Views",
+      "comments": "Comments",
+      "status": "Status",
+      "created": "Created",
+      "modified": "Modified",
+      "issue": "Issue",
+      "interact": "Interact",
+      "emotion": "Emotion",
+      "repute": "Repute",
+      "regular": "Regular",
+      "report": "Report",
+      "chemistry": "Chemistry",
+      "buy": "Buy",
+      "sale": "Sale",
+      "user": "User",
+      "category": "Category"
+    }
+  }
+}

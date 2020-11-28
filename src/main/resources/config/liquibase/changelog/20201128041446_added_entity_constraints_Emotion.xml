@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+    <!--
+        Added the constraints for entity Emotion.
+    -->
+    <changeSet id="20201128041446-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="you_id"
+                                 baseTableName="emotion"
+                                 constraintName="fk_emotion_you_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="avatar"/>
+
+        <addForeignKeyConstraint baseColumnNames="issue_id"
+                                 baseTableName="emotion"
+                                 constraintName="fk_emotion_issue_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="issue"/>
+
+        <addForeignKeyConstraint baseColumnNames="me_id"
+                                 baseTableName="emotion"
+                                 constraintName="fk_emotion_me_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="avatar"/>
+
+    </changeSet>
+</databaseChangeLog>

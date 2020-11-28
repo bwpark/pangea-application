@@ -1,0 +1,23 @@
+{
+  "pangeaApplicationApp": {
+    "tOS": {
+      "home": {
+        "title": "TOS",
+        "createLabel": "Create a new TOS",
+        "createOrEditLabel": "Create or edit a TOS",
+        "notFound": "No TOS found"
+      },
+      "created": "A new TOS is created with identifier {{ param }}",
+      "updated": "A TOS is updated with identifier {{ param }}",
+      "deleted": "A TOS is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete TOS {{ id }}?"
+      },
+      "detail": {
+        "title": "TOS"
+      },
+      "policy": "Policy",
+      "text": "Text"
+    }
+  }
+}

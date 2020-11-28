@@ -1,0 +1,27 @@
+{
+  "pangeaApplicationApp": {
+    "regular": {
+      "home": {
+        "title": "Regulars",
+        "createLabel": "Create a new Regular",
+        "createOrEditLabel": "Create or edit a Regular",
+        "notFound": "No Regulars found"
+      },
+      "created": "A new Regular is created with identifier {{ param }}",
+      "updated": "A Regular is updated with identifier {{ param }}",
+      "deleted": "A Regular is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Regular {{ id }}?"
+      },
+      "detail": {
+        "title": "Regular"
+      },
+      "name": "Name",
+      "status": "Status",
+      "created": "Created",
+      "modified": "Modified",
+      "you": "You",
+      "me": "Me"
+    }
+  }
+}
