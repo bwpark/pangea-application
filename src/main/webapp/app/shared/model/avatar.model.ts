@@ -40,8 +40,8 @@ export interface IAvatar {
   chemistries?: IChemistry[];
   buys?: IPack[];
   sales?: IDeal[];
-  userId?: number;
   categoryId?: number;
+  userId?: number;
 }
 
 export const defaultValue: Readonly<IAvatar> = {};

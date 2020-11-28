@@ -154,13 +154,13 @@ export const AvatarDetail = (props: IAvatarDetailProps) => {
           </dt>
           <dd>{avatarEntity.modified ? <TextFormat value={avatarEntity.modified} type="date" format={APP_DATE_FORMAT} /> : null}</dd>
           <dt>
-            <Translate contentKey="pangeaApplicationApp.avatar.user">User</Translate>
-          </dt>
-          <dd>{avatarEntity.userId ? avatarEntity.userId : ''}</dd>
-          <dt>
             <Translate contentKey="pangeaApplicationApp.avatar.category">Category</Translate>
           </dt>
           <dd>{avatarEntity.categoryId ? avatarEntity.categoryId : ''}</dd>
+          <dt>
+            <Translate contentKey="pangeaApplicationApp.avatar.user">User</Translate>
+          </dt>
+          <dd>{avatarEntity.userId ? avatarEntity.userId : ''}</dd>
         </dl>
         <Button tag={Link} to="/avatar" replace color="info">
           <FontAwesomeIcon icon="arrow-left" />{' '}

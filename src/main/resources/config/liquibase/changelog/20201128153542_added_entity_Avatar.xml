@@ -73,10 +73,10 @@
             <column name="modified" type="datetime">
                 <constraints nullable="false" />
             </column>
-            <column name="user_id" type="bigint">
+            <column name="category_id" type="bigint">
                 <constraints nullable="true" />
             </column>
-            <column name="category_id" type="bigint">
+            <column name="user_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->

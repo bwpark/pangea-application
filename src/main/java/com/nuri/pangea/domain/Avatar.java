@@ -144,11 +144,11 @@ public class Avatar implements Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties(value = "avatars", allowSetters = true)
-    private User user;
+    private Category category;
 
     @ManyToOne
     @JsonIgnoreProperties(value = "avatars", allowSetters = true)
-    private Category category;
+    private User user;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -631,19 +631,6 @@ public class Avatar implements Serializable {
         this.sales = deals;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public Avatar user(User user) {
-        this.user = user;
-        return this;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public Category getCategory() {
         return category;
     }
@@ -655,6 +642,19 @@ public class Avatar implements Serializable {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public Avatar user(User user) {
+        this.user = user;
+        return this;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

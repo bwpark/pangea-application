@@ -66,14 +66,6 @@ public class Category implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Category> children = new HashSet<>();
 
-    @OneToMany(mappedBy = "category")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    private Set<Avatar> avatars = new HashSet<>();
-
-    @OneToMany(mappedBy = "category")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    private Set<Issue> issues = new HashSet<>();
-
     @ManyToOne
     @JsonIgnoreProperties(value = "children", allowSetters = true)
     private Category parent;
@@ -200,13 +192,13 @@ public class Category implements Serializable {
         return this;
     }
 
-    public Category addChildren(Category category) {
+    public Category addChild(Category category) {
         this.children.add(category);
         category.setParent(this);
         return this;
     }
 
-    public Category removeChildren(Category category) {
+    public Category removeChild(Category category) {
         this.children.remove(category);
         category.setParent(null);
         return this;
@@ -214,56 +206,6 @@ public class Category implements Serializable {
 
     public void setChildren(Set<Category> categories) {
         this.children = categories;
-    }
-
-    public Set<Avatar> getAvatars() {
-        return avatars;
-    }
-
-    public Category avatars(Set<Avatar> avatars) {
-        this.avatars = avatars;
-        return this;
-    }
-
-    public Category addAvatar(Avatar avatar) {
-        this.avatars.add(avatar);
-        avatar.setCategory(this);
-        return this;
-    }
-
-    public Category removeAvatar(Avatar avatar) {
-        this.avatars.remove(avatar);
-        avatar.setCategory(null);
-        return this;
-    }
-
-    public void setAvatars(Set<Avatar> avatars) {
-        this.avatars = avatars;
-    }
-
-    public Set<Issue> getIssues() {
-        return issues;
-    }
-
-    public Category issues(Set<Issue> issues) {
-        this.issues = issues;
-        return this;
-    }
-
-    public Category addIssue(Issue issue) {
-        this.issues.add(issue);
-        issue.setCategory(this);
-        return this;
-    }
-
-    public Category removeIssue(Issue issue) {
-        this.issues.remove(issue);
-        issue.setCategory(null);
-        return this;
-    }
-
-    public void setIssues(Set<Issue> issues) {
-        this.issues = issues;
     }
 
     public Category getParent() {
